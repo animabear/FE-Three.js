@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>粒子系统</title>
+        <style>
+            body{
+                background-color: #000000;
+                padding: 0px;
+                margin: 0px;
+                overflow: hidden;
+            }
+            canvas { width: 100%; height: 100% }
+        </style>
+    </head>
+    <body>
+        <script src="../script/three.min.js"></script>
+        <script src="../script/threeapp.js"></script>
+        <script>
+           var GApp = function() {
+                ThreejsApp.call(this);
+           };
+           GApp.prototype = new ThreejsApp();
+           GApp.prototype.init3dObject = function() {
+                var self = this;
+                var geometry = new THREE.CubeGeometry(1, 1, 1);
+                var material = new THREE.MeshBasicMaterial( {color: 0x00ff00, wireframe: true } ); // wireframe: true
+                var cube = self.cube = new THREE.Mesh(geometry, material);
+                self.scene.add(cube);
+           };
+           GApp.prototype.update = function() {
+                var self = this;
+                self.cube.rotation.x += 0.01;
+                self.cube.rotation.y += 0.01;
+           };
+
+           var app = new GApp();
+           app.init();
+        </script>
+    </body>
+</html>
