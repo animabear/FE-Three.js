@@ -15,42 +15,27 @@
     </head>
     <body>
         <script src="../script/three.min.js"></script>
+        <script src="../script/threeapp.js"></script>
         <script>
-            // init render
-            var renderer = new THREE.WebGLRenderer( { antialias: true } );
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.body.appendChild(renderer.domElement);
+           var GApp = function() {
+                ThreejsApp.call(this);
+           };
+           GApp.prototype = new ThreejsApp();
+           GApp.prototype.init3dObject = function() {
+                var self = this;
+                var geometry = new THREE.CubeGeometry(1, 1, 1);
+                var material = new THREE.MeshBasicMaterial( {color: 0x00ff00, wireframe: true } ); // wireframe: true
+                var cube = self.cube = new THREE.Mesh(geometry, material);
+                self.scene.add(cube);
+           };
+           GApp.prototype.update = function() {
+                var self = this;
+                self.cube.rotation.x += 0.01;
+                self.cube.rotation.y += 0.01;
+           };
 
-            // init scene
-            var scene = new THREE.Scene();
-
-            // init camera
-            var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 4000 );
-            camera.position.set( 0, 0, 3 );
-            // camera.lookAt(0, 0, 0);
-
-            // init light
-            var light = new THREE.DirectionalLight( 0xffffff, 1.5);
-            light.position.set(0, 0, 1);
-            scene.add( light );
-
-            // create 3d object
-            var geometry = new THREE.CubeGeometry(1, 1, 1);
-            var material = new THREE.MeshBasicMaterial( {color: 0x00ff00, wireframe: true } ); // wireframe: true
-            var cube = new THREE.Mesh(geometry, material);
-            scene.add(cube);
-
-            // render scene
-            var render = function() {
-                requestAnimationFrame(render);
-
-                cube.rotation.x -= 0.01;
-                cube.rotation.y += 0.01;
-                
-                renderer.render(scene, camera);
-            }
-
-            render();
+           var app = new GApp();
+           app.init();
         </script>
     </body>
 </html>
