@@ -14,7 +14,7 @@
         </style>
     </head>
     <body>
-        <script src="../script/three.min.js"></script>
+        <script src="../script/three.new.min.js"></script>
         <script src="../script/threeapp.js"></script>
         <script>
            var GApp = function() {
@@ -23,15 +23,11 @@
            GApp.prototype = new ThreejsApp();
            GApp.prototype.init3dObject = function() {
                 var self = this;
-                var geometry = new THREE.CubeGeometry(1, 1, 1);
-                var material = new THREE.MeshBasicMaterial( {color: 0x00ff00, wireframe: true } ); // wireframe: true
-                var cube = self.cube = new THREE.Mesh(geometry, material);
-                self.scene.add(cube);
+                // Todo: 绘制粒子群
            };
            GApp.prototype.update = function() {
                 var self = this;
-                self.cube.rotation.x += 0.01;
-                self.cube.rotation.y += 0.01;
+                
            };
 
            var app = new GApp();
