@@ -18,7 +18,7 @@ ThreejsApp.prototype = {
         this.initLight();
         this.init3dObject();
         this.initMouseEvt();
-        this.render();
+        // this.render();
     },
 
     initRender: function() {

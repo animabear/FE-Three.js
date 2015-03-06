@@ -7,6 +7,7 @@
     </head>
     <body>
         <script src="../script/three.new.min.js"></script>
+        <script src="../script/controls/TrackballControls.js"></script>
         <script src="../script/tween.min.js"></script>
         <script src="../script/threeapp.js"></script>
         <script>
@@ -16,7 +17,15 @@
                   zPos: 5
                 };
             };
+
             GApp.prototype = new ThreejsApp();
+
+            GApp.prototype.init = function() {
+                ThreejsApp.prototype.init.call(this);
+
+                this.initCameraControls();
+            };
+
             GApp.prototype.init3dObject = function() {
                 var self = this;
                 var geometry = new THREE.CubeGeometry(1, 1, 1);
@@ -24,6 +33,7 @@
                 var cube = self.cube = new THREE.Mesh(geometry, material);
                 self.scene.add(cube);
             };
+
             GApp.prototype.handleMouseScroll = function(delta) {
                 var self = this;
                 var posZ = self.camera.position.z;
@@ -35,14 +45,36 @@
                 .easing( TWEEN.Easing.Elastic.Out )
                 .start();
             };
+
             GApp.prototype.update = function() {
                 var self = this;
-                self.cube.rotation.y += 0.01;
                 TWEEN.update();
+                self.cube.rotation.y += 0.01;
+                self.controls.update();
             };
+
+            GApp.prototype.initCameraControls = function() {
+                var self = this;
+                var controls = new THREE.TrackballControls( self.camera, self.renderer.domElement );
+                // var radius = ModelViewer.CAMERA_RADIUS;
+                
+                // controls.rotateSpeed = ModelViewer.ROTATE_SPEED;
+                // controls.zoomSpeed = ModelViewer.ZOOM_SPEED;
+                // controls.panSpeed = ModelViewer.PAN_SPEED;
+                // controls.dynamicDampingFactor = ModelViewer.DAMPING_FACTOR;
+                // controls.noZoom = false;
+                // controls.noPan = false;
+                // controls.staticMoving = false;
+
+                // controls.minDistance = radius * ModelViewer.MIN_DISTANCE_FACTOR;
+                // controls.maxDistance = radius * ModelViewer.MAX_DISTANCE_FACTOR;
+
+                self.controls = controls;
+            }
 
             var app = new GApp();
             app.init();
+            app.render();
         </script>
     </body>
 </html>
