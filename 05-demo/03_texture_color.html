@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>demo</title>
+
+    </head>
+    <body>
+        <script src="../script/three.new.min.js"></script>
+        <script src="../script/controls/TrackballControls.js"></script>
+        <script src="../script/tween.min.js"></script>
+        <script src="../script/threeapp.js"></script>
+        <script>
+            var GApp = function() {
+                ThreejsApp.call(this);
+            };
+
+            GApp.prototype = new ThreejsApp();
+
+            GApp.prototype.init3dObject = function() {
+                var self = this;
+                var geometry = new THREE.CubeGeometry(1, 1, 1);
+                var materials = [];
+                for (var i = 0; i < 6; ++i) {
+                    materials.push(new THREE.MeshBasicMaterial({
+                        map: THREE.ImageUtils.loadTexture('../image/' + i + '.png'),
+                        overdraw: true
+                    }));
+                }
+                var cube = self.cube = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial(materials) );
+                self.scene.add(cube);
+            };
+
+            GApp.prototype.update = function() {
+                var self = this;
+                self.cube.rotation.y += 0.05;
+            };
+
+            var app = new GApp();
+            app.init();
+            app.render();
+        </script>
+    </body>
+</html>
+
+<!-- Todo: 调整照相机位置 -->
